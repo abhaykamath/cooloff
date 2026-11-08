@@ -7,10 +7,9 @@
   NODE_VERSION = "22"
 
 # Proxy API calls to Render so the session cookie stays first-party.
-# Replace <render-service> with the real Render service name.
 [[redirects]]
   from   = "/api/*"
-  to     = "https://<render-service>.onrender.com/api/:splat"
+  to     = "https://cooloff-api.onrender.com/api/:splat"
   status = 200
   force  = true
 
