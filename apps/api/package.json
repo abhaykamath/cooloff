@@ -1,0 +1,30 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --env-file=.env src/index.ts",
+    "build": "tsc --noEmit && tsup",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "tg:webhook": "tsx --env-file=.env src/scripts/set-webhook.ts"
+  },
+  "dependencies": {
+    "@cb/shared": "workspace:*",
+    "@hono/node-server": "^2.1.6",
+    "@hono/zod-validator": "^0.9.1",
+    "@supabase/supabase-js": "^2.119.0",
+    "grammy": "^1.46.0",
+    "hono": "^4.13.17",
+    "node-cron": "^4.6.0",
+    "open-graph-scraper": "^6.13.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "tsup": "^8.5.1",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3"
+  }
+}

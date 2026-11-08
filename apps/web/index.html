@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#edf1f3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1a22" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet" />
+    <script>
+      // Follow the OS theme before first paint (no flash).
+      (function () {
+        var m = window.matchMedia('(prefers-color-scheme: dark)');
+        var apply = function () { document.documentElement.classList.toggle('dark', m.matches); };
+        apply();
+        m.addEventListener('change', apply);
+      })();
+    </script>
+    <title>Cooloff</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
