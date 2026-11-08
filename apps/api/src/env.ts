@@ -15,8 +15,11 @@ const envSchema = z.object({
   // polling = bot pulls updates (local dev, no public URL needed); webhook = Telegram pushes (Render).
   TELEGRAM_MODE: z.enum(['polling', 'webhook']).optional(),
 
-  PUBLIC_API_URL: z.url(),
-  DASHBOARD_URL: z.url(),
+  // Public base URL of this API, for the Telegram webhook. On Render, RENDER_EXTERNAL_URL is set
+  // automatically and wins; PUBLIC_API_URL is the fallback for other hosts / running the script locally.
+  RENDER_EXTERNAL_URL: z.url().optional(),
+  PUBLIC_API_URL: z.url().optional(),
+  DASHBOARD_URL: z.url().optional(),
 
   DASHBOARD_PASSWORD: z.string().min(8, 'Use at least 8 characters'),
   SESSION_SECRET: z.string().min(32, 'Use at least 32 characters (openssl rand -hex 32)'),
@@ -42,3 +45,4 @@ if (!parsed.success) {
 export const env = parsed.data;
 export const isProd = env.NODE_ENV === 'production';
 export const telegramMode = env.TELEGRAM_MODE ?? (isProd ? 'webhook' : 'polling');
+export const publicApiUrl = env.RENDER_EXTERNAL_URL ?? env.PUBLIC_API_URL;

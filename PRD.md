@@ -242,7 +242,7 @@ The running-on-boot behaviour means that if Render slept through an unlock time,
   - `/list`: what's cooling and what's unlocked, with time remaining
   - `/saved`: money-saved total
 - **Callback data:** `buy:<uuid>` / `drop:<uuid>` (41 bytes, under Telegram's 64-byte limit). A decision is only applied if the transition is valid (§3). Stale buttons get the answer "Already decided".
-- **Webhook registration:** one-off script, `pnpm --filter api tg:webhook`, which calls `setWebhook` with the URL and secret.
+- **Webhook registration:** automatic on every boot in webhook mode, using Render's built-in `RENDER_EXTERNAL_URL` (or `PUBLIC_API_URL` elsewhere). It's idempotent, and it also repairs the webhook if local polling deleted it. `pnpm --filter api tg:webhook` remains for manual use.
 - **Modes:** `TELEGRAM_MODE=polling` (default in development) or `webhook` (default in production). ⚠️ Polling deletes the registered webhook, so don't run local polling against the live bot. Re-run `tg:webhook` after doing so, or use a separate dev bot.
 
 ### 7.4 Dashboard auth (single user)
@@ -315,7 +315,8 @@ Mobile-first, since it's used on the phone as much as the Mac. Light and dark th
 ```
 
 ### Render (api), free web service
-- Build: `pnpm install --frozen-lockfile && pnpm --filter api build`
+- Root directory: empty (repo root, needed for the workspace)
+- Build: `pnpm install --frozen-lockfile --prod=false && pnpm --filter api build` (`--prod=false` because `NODE_ENV=production` would otherwise skip the build tools)
 - Start: `pnpm --filter api start`
 - Health check path: `/health`
 - Kept awake by my external keep-alive app (cron-job.org → keep-alive app → `/health`, every 5 minutes).
@@ -333,8 +334,9 @@ Mobile-first, since it's used on the phone as much as the Mac. Light and dark th
 | `TELEGRAM_BOT_TOKEN` | From @BotFather |
 | `TELEGRAM_WEBHOOK_SECRET` | Random string, checked on every webhook call |
 | `TELEGRAM_OWNER_CHAT_ID` | My chat ID |
-| `PUBLIC_API_URL` | Render URL, used for webhook registration |
-| `DASHBOARD_URL` | Netlify URL, used for "Open dashboard" links in bot messages |
+| `PUBLIC_API_URL` | Optional. Public https URL for the webhook when not on Render (Render provides `RENDER_EXTERNAL_URL` automatically) |
+| `DASHBOARD_URL` | Optional, not used yet (reserved for "Open dashboard" links in bot messages) |
+| `TELEGRAM_MODE` | `polling` / `webhook`; defaults to webhook when `NODE_ENV=production` |
 | `DASHBOARD_PASSWORD` | Login password |
 | `SESSION_SECRET` | Cookie signing |
 | `DEFAULT_CURRENCY` | e.g. `INR` |
