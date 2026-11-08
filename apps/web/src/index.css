@@ -51,13 +51,14 @@
 
 /*
   Palette: an impulse starts hot (ember) and cools to cold (glacier).
-  Frost #EDF1F3 · Paper #FFFFFF · Ink #15212C · Slate #5C6B78 · Ember #E8512F · Glacier #2F7FB8
+  Frost #EDF1F3 · Paper #FFFFFF · Ink #15212C · Slate #5C6B78 · Ember #C03F1C · Glacier #2A72A6 (light)
 */
 :root {
     --radius: 0.75rem;
     --frost: #edf1f3;
-    --ember: #e8512f;
-    --glacier: #2f7fb8;
+    /* Darkened from #e8512f / #2f7fb8 so small status text clears 4.5:1 on white and frost. */
+    --ember: #c03f1c;
+    --glacier: #2a72a6;
 
     --background: var(--frost);
     --foreground: #15212c;

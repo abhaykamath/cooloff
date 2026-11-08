@@ -3,6 +3,7 @@ import { LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLogout, useMe } from '@/lib/queries';
 import { Button } from '@/components/ui/button';
+import { ThemeMenu } from '@/components/theme-menu';
 
 export function RequireAuth() {
   const me = useMe();
@@ -33,13 +34,15 @@ export function AppShell() {
           <NavLink to="/history" className={navLink}>
             History
           </NavLink>
+          <span className="mx-1 h-5 w-px bg-border" aria-hidden />
+          <ThemeMenu />
           <Button
             variant="ghost"
             size="icon-sm"
             aria-label="Log out"
             title="Log out"
             onClick={() => logout.mutate()}
-            className="ml-1 text-muted-foreground"
+            className="text-muted-foreground"
           >
             <LogOut />
           </Button>
