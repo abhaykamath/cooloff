@@ -2,8 +2,6 @@ import { createBrowserRouter } from 'react-router';
 import { AppShell, RequireAuth } from './components/app-shell';
 import { LoginPage } from './pages/login';
 import { HomePage } from './pages/home';
-import { HistoryPage } from './pages/history';
-import { ItemPage } from './pages/item';
 
 export const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
@@ -14,8 +12,9 @@ export const router = createBrowserRouter([
         element: <AppShell />,
         children: [
           { path: '/', element: <HomePage /> },
-          { path: '/history', element: <HistoryPage /> },
-          { path: '/items/:id', element: <ItemPage /> },
+          // Loaded on first visit to keep the initial download to what Home needs.
+          { path: '/history', lazy: () => import('./pages/history').then((m) => ({ Component: m.HistoryPage })) },
+          { path: '/items/:id', lazy: () => import('./pages/item').then((m) => ({ Component: m.ItemPage })) },
         ],
       },
     ],
